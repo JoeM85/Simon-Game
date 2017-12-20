@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simon Says</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="">
+        <audio class="red-btn">
+            <source src="game-sounds/beep-1.mp3" type="audio/mp3">
+        </audio>
+        <audio class="green-btn">
+            <source src="game-sounds/beep-2.mp3" type="audio/mp3">
+        </audio>
+        <audio class="blue-btn">
+            <source src="game-sounds/beep-3.mp3" type="audio/mp3">
+        </audio>
+        <audio class="yellow-btn">
+            <source src="game-sounds/beep-4.mp3" type="audio/mp3">
+        </audio>
+        <audio class="game-over-sound">
+            <source src="game-sounds/game-over.mp3" type="audio/mp3">
+        </audio>
+        <div class="background-color">
+            <div id="btn-container">
+                <button id="startBtn">
+                start
+            </button>
+            </div>
+            <div class="player-score-board">
+                <div class="score-container text-center">Current Score : <span class="score">0</span></div>
+                <div class="score-container text-center">High Score : <span class="high-score">0</span></div>
+            </div>
+            <div class="game-btns-container">
+                <!--    <div class="row">
+                <div class="col-md-6 col-md-offset-3 text-center">-->
+                <div class="game-border">
+                    <div class="border">
+                        <div class="btn-selection" data-value="0" id="green"></div>
+                        <div class="btn-selection" data-value="1" id="red"></div>
+
+
+                        <!--      <div class="row">
+                <div class="col-md-6 col-md-offset-3 text-center">-->
+                        <div class="btn-selection" data-value="2" id="yellow"></div>
+                        <div class="btn-selection" data-value="3" id="blue"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/script.js"></script>
+</body>
+
+</html>
