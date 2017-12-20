@@ -115,3 +115,22 @@ body {
     }
 }
 
+.game-over-light-up {
+    -webkit-animation: gameOver;
+    animation: gameOver;
+    -webkit-animation-duration: 2s;
+    animation-duration: 2s;
+}
+
+@-webkit-keyframes gameOver {
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes gameOver {
+    100% {
+        opacity: 1;
+    }
+}
+
