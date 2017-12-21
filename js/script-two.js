@@ -16,15 +16,6 @@ $(document).ready(function () {
             //    model.hasGameStarted = true;
             controller.computerTurn()
         },
-        //Stops from restarting game mid match
-        preventReClick: function () {
-            if (model.hasGameStarted) {
-                view.startBtn.addEventListener("click", function (e) {
-                    e.stopImmediatePropagation();
-                    e.preventDefault();
-                });
-            }
-        },
         //Loops array and lights up div according to data-value
         computerArrLightUp: function () {
             setTimeout(function () {
@@ -68,16 +59,18 @@ $(document).ready(function () {
                 this.resetGame(model.score);
             }
         },
-        //Resets score, checks for highscore and emptys computer's/player's array
-        resetGame: function (score) {
-            if (score > view.highScore.innerHTML) {
-                view.highScore.innerHTML = score;
-            }
-            view.currentScore.innerHTML = 0;
+        emptyTurnArrs: function () {
             model.computerTurns = [];
             model.playerTurns = [];
+        },
+        //Resets score, checks for highscore and emptys computer's/player's array
+        resetGame: function () {
+            view.checkScore(model.score)
+            controller.emptyTurnArrs();
+            console.log(model.playerTurns);
             view.gameOverSound.play();
             view.gameOverLightUp();
+            view.startBtn.disabled = false;
         },
         //Generate randomw number for computer
         randomComputerChoice: function () {
@@ -99,9 +92,16 @@ $(document).ready(function () {
         //Adding listener for the start button
         addClickToStart: function () {
             startBtn.addEventListener('click', function () {
+                view.startBtn.disabled = true;
                 controller.startGame();
                 view.addClickToBtns();
             })
+        },
+        checkScore: function (score) {
+            view.currentScore.innerHTML = 0;
+            if (score > view.highScore.innerHTML) {
+                view.highScore.innerHTML = score;
+            }
         },
         //Adds listeners to div's and gets player data-value to be pushed to array
         addClickToBtns: function () {
@@ -124,6 +124,8 @@ $(document).ready(function () {
             for (var i = 0; i < animatedBtn.length; i++) {
                 if (animatedBtn[i].classList.contains('light-up')) {
                     animatedBtn[i].classList.remove('light-up')
+                } else if (animatedBtn[i].classList.contains('game-over-light-up')) {
+                    animatedBtn[i].classList.remove('game-over-light-up')
                 }
             }
         },
@@ -139,10 +141,11 @@ $(document).ready(function () {
                 view.blueSound.play();
             }
         },
-        //Game over adding animations
+        //Game over animations
         gameOverLightUp: function () {
             for (var i = 0; i < view.btnElems.length; i++) {
                 view.btnElems[i].classList.add('game-over-light-up');
+                view.btnElems[i].addEventListener("webkitAnimationEnd", view.divColorAnimationEnd);
             }
         }
     }
