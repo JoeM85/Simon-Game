@@ -11,9 +11,7 @@ $(document).ready(function () {
 
     var controller = {
         //Starts game 
-        startGame: function () {
-            //    model.nextTurn = 1;
-            //    model.hasGameStarted = true;
+        startComputer: function () {
             controller.computerTurn()
         },
         //Loops array and lights up div according to data-value
@@ -39,7 +37,7 @@ $(document).ready(function () {
             this.computerArrLightUp();
         },
         //Keeps track of score
-        totalPlayerScore: function () {
+        playerScore: function () {
             model.score++;
             view.currentScore.innerHTML = model.score;
         },
@@ -49,23 +47,33 @@ $(document).ready(function () {
             var playerTurn = JSON.stringify(model.playerTurns);
             if (computerturn === playerTurn &&
                 computerturn.length === playerTurn.length) {
-                this.totalPlayerScore();
+                this.playerScore();
                 model.nextTurn++;
                 model.playerTurns = [];
                 this.computerTurn();
                 //    console.log(model.nextTurn);
             } else if (computerturn !== playerTurn &&
                 computerturn.length === playerTurn.length) {
-                this.resetGame(model.score);
+                this.resetGame();
             }
         },
+        //Clears Arrays
         emptyTurnArrs: function () {
             model.computerTurns = [];
             model.playerTurns = [];
         },
+        //Reset score and check for a new high score
+        checkScore: function (score) {
+            view.currentScore.innerHTML = 0;
+            model.score = 0;
+            if (score > view.highScore.innerHTML) {
+                view.highScore.innerHTML = score;
+                localStorage.setItem('High Score', JSON.stringify(view.highScore.innerHTML))
+            }
+        },
         //Resets score, checks for highscore and emptys computer's/player's array
         resetGame: function () {
-            view.checkScore(model.score)
+            controller.checkScore(model.score)
             controller.emptyTurnArrs();
             console.log(model.playerTurns);
             view.gameOverSound.play();
@@ -80,31 +88,22 @@ $(document).ready(function () {
 
     var view = {
         //Adding elems to variables
-        greenSound: document.getElementsByClassName('green-btn')[0],
-        redSound: document.getElementsByClassName('red-btn')[0],
-        blueSound: document.getElementsByClassName('blue-btn')[0],
-        yellowSound: document.getElementsByClassName('yellow-btn')[0],
-        currentScore: document.getElementsByClassName('score')[0],
-        highScore: document.getElementsByClassName('high-score')[0],
-        gameOverSound: document.getElementsByClassName('game-over-sound')[0],
-        btnElems: document.getElementsByClassName('btn-selection'),
-        startBtn: document.getElementById('startBtn'),
-        //Adding listener for the start button
-        addClickToStart: function () {
-            startBtn.addEventListener('click', function () {
-                view.startBtn.disabled = true;
-                controller.startGame();
-                view.addClickToBtns();
-            })
-        },
-        checkScore: function (score) {
-            view.currentScore.innerHTML = 0;
-            if (score > view.highScore.innerHTML) {
-                view.highScore.innerHTML = score;
-            }
-        },
-        //Adds listeners to div's and gets player data-value to be pushed to array
-        addClickToBtns: function () {
+        initGame: function () {
+            this.greenSound = document.getElementsByClassName('green-btn')[0],
+                this.redSound = document.getElementsByClassName('red-btn')[0],
+                this.blueSound = document.getElementsByClassName('blue-btn')[0],
+                this.yellowSound = document.getElementsByClassName('yellow-btn')[0],
+                this.currentScore = document.getElementsByClassName('score')[0],
+                this.highScore = document.getElementsByClassName('high-score')[0],
+                this.gameOverSound = document.getElementsByClassName('game-over-sound')[0],
+                this.btnElems = document.getElementsByClassName('btn-selection'),
+                this.startBtn = document.getElementById('startBtn'),
+                //Adding listener for the start button
+                this.startBtn.addEventListener('click', function () {
+                    view.startBtn.disabled = true;
+                    controller.startComputer();
+                })
+            //Looping though btnElms getting player click data and pushing to player arr
             for (var i = 0; i < this.btnElems.length; i++) {
                 this.btnElems[i].addEventListener('click', function (event) {
                     var clickedElem = event.target || event.srcElement;
@@ -149,5 +148,5 @@ $(document).ready(function () {
             }
         }
     }
-    view.addClickToStart();
+    view.initGame();    
 });

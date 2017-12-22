@@ -30,6 +30,9 @@ body {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
 }
+.player-score-board {
+    margin-top: 1%;
+}
 
 #startBtn:hover {
     color: #ededed;
