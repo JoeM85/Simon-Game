@@ -1,7 +1,6 @@
 $(document).ready(function () {
 
     var model = {
-        hasGameStarted: false,
         computerTurns: [],
         playerTurns: [],
         nextTurn: 0,
@@ -19,14 +18,16 @@ $(document).ready(function () {
             setTimeout(function () {
                 for (i = 0; i < model.computerTurns.length; i++) {
                     (function (i) {
-                        setTimeout(function () {
-                            var lightBackground = $('div[data-value=' + '"' + model.computerTurns[i] + '"]');
-                            console.log(lightBackground);
-                            lightBackground.addClass('light-up');
+                        setTimeout(function () {          
+                            for(var j = 0; j < view.btnElems.length; j++) {           
+                                if(model.computerTurns[i] === Number(view.btnElems[j].getAttribute('data-value'))) {
+                                    view.btnElems[j].classList.add('light-up');
+                                    view.btnElems[j].addEventListener("webkitAnimationEnd", view.divColorAnimationEnd)    
+                                }                                
+                            }    
                             view.playSound();
-                            lightBackground.on("webkitAnimationEnd", view.divColorAnimationEnd);
                         }, 1000 * i);
-                    }(i));
+                    }(i))
                 }
             }, 800);
         },
@@ -51,7 +52,6 @@ $(document).ready(function () {
                 model.nextTurn++;
                 model.playerTurns = [];
                 this.computerTurn();
-                //    console.log(model.nextTurn);
             } else if (computerturn !== playerTurn &&
                 computerturn.length === playerTurn.length) {
                 this.resetGame();
@@ -68,7 +68,7 @@ $(document).ready(function () {
             model.score = 0;
             if (score > view.highScore.innerHTML) {
                 view.highScore.innerHTML = score;
-                localStorage.setItem('High Score', JSON.stringify(view.highScore.innerHTML))
+                localStorage.setItem('high score', JSON.stringify(view.highScore.innerHTML))
             }
         },
         //Resets score, checks for highscore and emptys computer's/player's array
@@ -129,15 +129,19 @@ $(document).ready(function () {
             }
         },
         //Plays correct sound for selected btn
-        playSound: function () {
-            if ($('#green').hasClass('light-up')) {
-                view.greenSound.play();
-            } else if ($('#red').hasClass('light-up')) {
-                view.redSound.play();
-            } else if ($('#yellow').hasClass('light-up')) {
-                view.yellowSound.play();
-            } else if ($('#blue').hasClass('light-up')) {
-                view.blueSound.play();
+        playSound: function () {   
+            for (var i = 0; i < view.btnElems.length; i++) { 
+                var btnSelection = view.btnElems[i];
+                
+                if(btnSelection.classList.contains('light-up') && btnSelection.id === 'green') {
+                    view.greenSound.play();
+                } else if(btnSelection.classList.contains('light-up') && btnSelection.id === 'red') {
+                    view.redSound.play();
+                } else if(btnSelection.classList.contains('light-up') && btnSelection.id === 'blue') {
+                    view.blueSound.play();
+                } else if(btnSelection.classList.contains('light-up') && btnSelection.id === 'yellow') {
+                    view.yellowSound.play();
+                }
             }
         },
         //Game over animations
@@ -148,5 +152,5 @@ $(document).ready(function () {
             }
         }
     }
-    view.initGame();    
+    view.initGame();
 });
