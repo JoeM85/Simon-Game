@@ -19,6 +19,7 @@ body {
     height: 150px;
     width: 150px;
     background-color: #1c1c1c;
+    color: #f7f7f7;
     border-radius: 50%;
     position: fixed;
     top: 50%;
@@ -26,24 +27,34 @@ body {
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     border: none;
-    z-index: 1;
+    z-index: 1000;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
 }
+
 .player-score-board {
     margin-top: 1%;
+    text-align: center;
+    font-weight: bold;
 }
 
 #startBtn:hover {
-    color: #ededed;
+    color: #bebebe;
+    cursor: pointer;
 }
 
 .btn-selection {
+    position:relative;
     opacity: .6;
     width: 250px;
     height: 250px;
     display: inline-block;
     border: 15px solid #1c1c1c;
+    z-index: -1;
+}
+
+.btn-selection:hover {
+    cursor: pointer;
 }
 
 .game-border {
