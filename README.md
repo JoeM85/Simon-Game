@@ -6,6 +6,8 @@
 
 Press the start button to have the computer light up a random color button. Press the color button that was lit up and 
 continue as long as you can as the computer lights up a additional button every correct turn.
+Play the game [Here](https://www.joemoran.me/simon.html)
 
 ![simon-game](https://user-images.githubusercontent.com/19617720/35175680-d3af3564-fd42-11e7-9ba9-e7a1ddd75b1a.png)
+
 
